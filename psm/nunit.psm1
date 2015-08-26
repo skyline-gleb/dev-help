@@ -14,13 +14,13 @@ Function Invoke-NUnit()
     [CmdletBinding()]
     Param(
         [Parameter(Mandatory=$True)]
-        [string]$testFile,
+        [string[]]$testFiles,
 
         [string]$resultFile = 'nunit-result.xml'
     )
     
     $arguments = @(
-        $testFile
+        $testFiles
         "/xml=$resultFile"
         '/labels'
     )
