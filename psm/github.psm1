@@ -55,11 +55,12 @@ Function Invoke-CreateGitHubRelease()
             return
         }
         
-        $uploadUrl = $result | Select -ExpandProperty upload_url
+        $releaseId = $result | Select -ExpandProperty id
+        $uploadUriBase = "https://uploads.github.com/repos/$owner/$repo/releases/$releaseId/assets"
         $artifacts = Get-ChildItem -Path $releaseDir
         foreach ($artifact in $artifacts)
         {
-            $uploadUri = $uploadUrl -replace '\{\?name\}', "?name=$artifact"
+            $uploadUri = $uploadUriBase + "?name=$artifact"
             $uploadFile = Join-Path -path $releaseDir -childpath $artifact
 
             $uploadParams = @{
